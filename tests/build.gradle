@@ -1,4 +1,5 @@
 apply plugin: "java"
+apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
 
@@ -7,5 +8,27 @@ sourceSets{
         resources{
             srcDir "src/test/resources"
         }
+    }
+}
+
+jacoco{
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport{
+    reports{
+        html.enabled = true
+        csv.enabled = false
+        xml.enabled = true
+        xml.destination file("$buildDir/jacocoXml.xml")
+        html.destination file("$buildDir/jacocoHtml")
+    }
+}
+
+test{
+    jacoco{
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
     }
 }
