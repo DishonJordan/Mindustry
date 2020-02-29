@@ -27,6 +27,8 @@ buildscript{
 allprojects{
     version = 'release'
     apply plugin: 'maven'
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
     group = 'com.github.Anuken'
 
     ext{
@@ -158,6 +160,19 @@ allprojects{
     }
 
     tasks.withType(Javadoc).all{ enabled = false }
+
+    jacoco {
+        toolVersion = "0.8.5"
+        reportsDir = file("$buildDir/customJacocoReportDir")
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination file("${buildDir}/jacocoHtml")
+        }
+    }
 }
 
 project(":desktop"){
@@ -281,6 +296,11 @@ project(":tests"){
     test{
         useJUnitPlatform()
         workingDir = new File("../core/assets")
+
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+            classDumpDir = file("$buildDir/jacoco/classpathdumps")
+        }
     }
 }
 

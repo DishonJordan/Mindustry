@@ -1,5 +1,4 @@
 apply plugin: "java"
-apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
 
@@ -8,17 +7,5 @@ sourceSets{
         resources{
             srcDir "src/test/resources"
         }
-    }
-}
-
-jacoco{
-    toolVersion = "0.8.5"
-}
-
-jacocoTestReport{
-    reports {
-        xml.enabled = false
-        csv.enabled = false
-        html.destination = file("${buildDir}/jacocoHtml")
     }
 }
