@@ -174,4 +174,24 @@ public class WorldTests {
 
     }
 
+    @Test
+    public void worldDarknessTestWithNonSolidBlocks(){
+        int width = 5;
+        int height = 5;
+
+        World world = new World();
+        MockAirGenerator generator = new MockAirGenerator(10,10);
+        world.loadGenerator(generator);
+
+        Tile[][] tiles = world.getTiles();
+
+        world.addDarkness(world.getTiles());
+
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                assertEquals(false,world.getTiles()[i][j].isDarkened());
+            }
+        }
+    }
+
 }

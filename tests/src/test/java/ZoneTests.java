@@ -1,9 +1,14 @@
+import arc.ApplicationCore;
+import arc.backend.headless.HeadlessApplication;
 import arc.struct.*;
 import arc.util.*;
+import mindustry.Vars;
 import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.game.*;
 import mindustry.io.SaveIO.*;
+import mindustry.maps.Map;
+import mindustry.net.Net;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.storage.*;
@@ -14,10 +19,55 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 public class ZoneTests{
+    static Map testMap;
+    static boolean initialized;
 
     @BeforeAll
     static void launchApplication(){
-        ApplicationTests.launchApplication();
+        //only gets called once
+        if(initialized) return;
+        initialized = true;
+
+        try{
+            boolean[] begins = {false};
+            Throwable[] exceptionThrown = {null};
+            Log.setUseColors(false);
+
+            ApplicationCore core = new ApplicationCore(){
+                @Override
+                public void setup(){
+                    headless = true;
+                    net = new Net(null);
+                    tree = new FileTree();
+                    Vars.init();
+                    content.createBaseContent();
+
+                    add(logic = new Logic());
+                    add(netServer = new NetServer());
+
+                    content.init();
+                }
+
+                @Override
+                public void init(){
+                    super.init();
+                    begins[0] = true;
+                    testMap = maps.loadInternalMap("groundZero");
+                    Thread.currentThread().interrupt();
+                }
+            };
+
+            new HeadlessApplication(core, null, throwable -> exceptionThrown[0] = throwable);
+
+            while(!begins[0]){
+                if(exceptionThrown[0] != null){
+                    fail(exceptionThrown[0]);
+                }
+                Thread.sleep(10);
+            }
+        }catch(Throwable r){
+            fail(r);
+        }
     }
 
     @BeforeEach
