@@ -255,7 +255,8 @@ public class Pathfinder implements Runnable{
         //add targets
         for(int i = 0; i < path.targets.size; i++){
             int pos = path.targets.get(i);
-            path.weights[Pos.x(pos)][Pos.y(pos)] = 0;
+            if(Pos.x(pos) < path.weights.length && Pos.y(pos) < path.weights[0].length)
+                path.weights[Pos.x(pos)][Pos.y(pos)] = 0;
             path.frontier.addFirst(pos);
         }
 
