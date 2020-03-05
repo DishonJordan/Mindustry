@@ -182,22 +182,20 @@ public class ItemBufferTests {
     @Test
     public void itemBufferWriteTest(){
         ItemBuffer itemBuffer = new ItemBuffer(3, 0);
-        itemBuffer.accept(new Item("test_item10", new Color()), (short)10);
-        itemBuffer.accept(new Item("test_item11", new Color()), (short)2);
+        itemBuffer.accept(new Item("test_item12", new Color()), (short)10);
+        itemBuffer.accept(new Item("test_item13", new Color()), (short)2);
 
-        String temp = "itemBufferWrite.txt";
-
-        try {
-            itemBuffer.write(new DataOutputStream(new FileOutputStream(temp)));
-
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(temp));
-            String contents = "";
-            contents = new String(Files.readAllBytes(Paths.get(temp)));
-            System.out.println(contents);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        String temp = "itemBufferWrite.txt";
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//
+//        try {
+//            itemBuffer.write(new DataOutputStream(new FileOutputStream(temp)));
+//
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
