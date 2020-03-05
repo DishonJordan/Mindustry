@@ -109,4 +109,11 @@ public class GameStateTests {
         GameState gameState = new GameState();
         assertFalse(gameState.isEditor());
     }
+
+    @Test
+    public void gameStateEditorFalse(){
+        GameState gameState = new GameState();
+        gameState.rules.editor = true;
+        assertTrue(gameState.isEditor());
+    }
 }

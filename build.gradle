@@ -16,11 +16,15 @@ buildscript{
         maven{ url 'https://jitpack.io' }
     }
 
+    configurations.maybeCreate("pitest")
     dependencies{
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.8'
         classpath "com.github.anuken:packr:-SNAPSHOT"
         classpath "com.github.Anuken.Arc:packer:$arcHash"
         classpath "com.github.Anuken.Arc:arc-core:$arcHash"
+
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.5'
+        pitest 'org.pitest:pitest-junit5-plugin:0.10'
     }
 }
 
@@ -284,6 +288,7 @@ project(":server"){
 
 project(":tests"){
     apply plugin: "java"
+    apply plugin: "info.solidsoft.pitest"
 
     dependencies{
         testImplementation project(":core")
@@ -301,6 +306,13 @@ project(":tests"){
             destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
             classDumpDir = file("$buildDir/jacoco/classpathdumps")
         }
+    }
+
+    pitest{
+        pitestVersion = '1.4.6'
+        testPlugin = 'junit5'
+        targetClasses = ['$rootDir/core/src/mindustry/core/World.java']
+        timestampedReports = false
     }
 }
 
