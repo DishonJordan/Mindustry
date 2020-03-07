@@ -108,9 +108,9 @@ public class WorldTests {
 
     @Test
     public void worldCreateTilesNegativeHeight(){
-        //Crashes
         World world = new World();
-        //world.createTiles(5,0);
+        world.createTiles(5,-1);
+        assertNull(world.getTiles());
     }
 
     @Test
@@ -152,7 +152,7 @@ public class WorldTests {
         assertEquals(null, world.tile(0));
         assertEquals(null, world.tile(0,0));
         assertEquals(null, world.ltile(0,0));
-        //assertEquals(null, world.rawTile(0,0));
+        assertEquals(null, world.rawTile(0,0));
         assertEquals(null, world.ltileWorld(0,0));
         assertEquals(0, world.toTile((float)0));
     }
@@ -168,10 +168,12 @@ public class WorldTests {
 
         Tile[][] tiles = world.getTiles();
 
+        assertEquals(tiles[0][0], world.tile(0));
         assertEquals(tiles[2][2], world.tile(2,2));
         assertEquals(tiles[3][5], world.ltile(3,5));
+        assertEquals(tiles[1][3], world.rawTile(1,3));
         assertEquals(tiles[0][0], world.ltileWorld(1,1));
-
+        assertEquals(1, world.toTile((float)10));
     }
 
     @Test
