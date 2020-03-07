@@ -102,7 +102,8 @@ public class World{
     }
 
     public Tile rawTile(int x, int y){
-        return tiles[x][y];
+
+        return tiles == null? null : tiles[x][y];
     }
 
     public @Nullable Tile tileWorld(float x, float y){
@@ -136,16 +137,17 @@ public class World{
      * Only use for loading saves!
      */
     public Tile[][] createTiles(int width, int height){
-        if(tiles != null){
-            clearTileEntities();
+        if(width > 0 && height > 0) {
+            if (tiles != null) {
+                clearTileEntities();
 
-            if(tiles.length != width || tiles[0].length != height){
+                if (tiles.length != width || tiles[0].length != height) {
+                    tiles = new Tile[width][height];
+                }
+            } else {
                 tiles = new Tile[width][height];
             }
-        }else{
-            tiles = new Tile[width][height];
         }
-
         return tiles;
     }
 
