@@ -30,8 +30,10 @@ public class GameState{
     }
 
     public void set(State astate){
-        Events.fire(new StateChangeEvent(state, astate));
-        state = astate;
+        if(astate != null) {
+            Events.fire(new StateChangeEvent(state, astate));
+            state = astate;
+        }
     }
 
     public boolean isEditor(){

@@ -76,6 +76,12 @@ public class GameStateTests {
     }
 
     @Test
+    public void gameStateIsNullTest(){
+        GameState gameState = new GameState();
+        assertFalse(gameState.is(null));
+    }
+
+    @Test
     public void gameStateInitTest(){
         GameState gameState = new GameState();
         assertEquals(gameState.getState(), GameState.State.menu);
@@ -88,6 +94,15 @@ public class GameStateTests {
         assertEquals(gameState.getState(), GameState.State.paused);
         gameState.set(GameState.State.playing);
         assertEquals(gameState.getState(), GameState.State.playing);
+    }
+
+    @Test
+    public void gameStateChangeNullState(){
+        GameState gameState = new GameState();
+        gameState.set(GameState.State.paused);
+        assertEquals(gameState.getState(), GameState.State.paused);
+        gameState.set(null);
+        assertEquals(gameState.getState(), GameState.State.paused);
     }
 
     @Test
@@ -111,7 +126,7 @@ public class GameStateTests {
     }
 
     @Test
-    public void gameStateEditorFalse(){
+    public void gameStateEditorTrue(){
         GameState gameState = new GameState();
         gameState.rules.editor = true;
         assertTrue(gameState.isEditor());
