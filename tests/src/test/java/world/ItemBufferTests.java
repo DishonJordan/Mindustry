@@ -141,6 +141,7 @@ public class ItemBufferTests {
     public void itemBufferRemoveWhenEmpty(){
         ItemBuffer itemBuffer = new ItemBuffer(3, 0);
         itemBuffer.remove();
+        assertNull(itemBuffer.poll());
     }
 
     @Test
