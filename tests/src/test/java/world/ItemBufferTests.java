@@ -17,8 +17,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static mindustry.Vars.*;
 import static mindustry.Vars.maps;
@@ -142,8 +140,7 @@ public class ItemBufferTests {
     @Test
     public void itemBufferRemoveWhenEmpty(){
         ItemBuffer itemBuffer = new ItemBuffer(3, 0);
-        //itemBuffer.remove();
-        //Crashes
+        itemBuffer.remove();
     }
 
     @Test

@@ -56,8 +56,10 @@ public class ItemBuffer{
     }
 
     public void remove(){
-        System.arraycopy(buffer, 1, buffer, 0, index - 1);
-        index--;
+        if(index > 0) {
+            System.arraycopy(buffer, 1, buffer, 0, index - 1);
+            index--;
+        }
     }
 
     public void write(DataOutput stream) throws IOException{
